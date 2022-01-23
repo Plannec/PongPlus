@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://fonts/pixelbold.tres" type="DynamicFont" id=1]
+[ext_resource path="res://fonts/pixelregular.tres" type="DynamicFont" id=2]
+
+[node name="GridContainer" type="GridContainer"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+margin_right = 100.0
+margin_bottom = 79.0
+custom_fonts/font = ExtResource( 1 )
+text = "26"
+align = 1
+
+[node name="Label2" type="Label" parent="."]
+margin_top = 83.0
+margin_right = 100.0
+margin_bottom = 103.0
+custom_fonts/font = ExtResource( 2 )
+text = "Points"
+align = 1
