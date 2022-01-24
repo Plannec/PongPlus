@@ -9,20 +9,25 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Reference",
-"class": "AudioLoader",
+"base": "Camera2D",
+"class": "ShakeCamera2D",
 "language": "GDScript",
-"path": "res://scripts/GDScriptAudioImport.gd"
+"path": "res://scenes/shake_camera/ShakeCamera2D.gd"
 } ]
 _global_script_class_icons={
-"AudioLoader": ""
+"ShakeCamera2D": ""
 }
 
 [application]
 
 config/name="Pong+"
 run/main_scene="res://scenes/Menu.tscn"
+boot_splash/bg_color=Color( 0, 0, 0, 1 )
 config/icon="res://icon.png"
+
+[autoload]
+
+Types="*res://scripts/Types.gd"
 
 [debug]
 
@@ -30,6 +35,7 @@ settings/stdout/print_fps=true
 
 [display]
 
+window/size/resizable=false
 window/vsync/vsync_via_compositor=true
 
 [input]
@@ -64,6 +70,8 @@ common/enable_pause_aware_picking=true
 
 [rendering]
 
+quality/intended_usage/framebuffer_allocation=0
+quality/intended_usage/framebuffer_allocation.mobile=0
 environment/default_clear_color=Color( 0, 0, 0, 1 )
 quality/filters/msaa=2
 environment/default_environment="res://default_env.tres"

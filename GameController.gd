@@ -10,6 +10,7 @@ var player_left_score = 0;
 var player_right_score = 0;
 
 const Helper = preload("scripts/Helper.gd");
+onready var types = get_node("/root/Types") as Types;
 
 onready var sound = AudioStreamPlayer.new();
 onready var helper_class = Helper.new();
@@ -17,6 +18,8 @@ onready var helper_class = Helper.new();
 # Score text
 onready var player_left_score_text = $CenterContainer/GridContainer/LeftScore;
 onready var player_right_score_text = $CenterContainer/GridContainer/RightScore;
+
+onready var anim = $Background/AnimationPlayer as AnimationPlayer;
 
 func _ready():
 	add_child(sound);
@@ -30,13 +33,21 @@ func _ready():
 func spawn_ball():
 	ball = ballScene.instance();
 	ball.connect("destroy", self, "_on_ball_destroy");
+	ball.connect("hit", self, "_on_ball_hit");
 	
 	add_child(ball);
-	
+
+func _on_ball_hit(side):
+	anim.stop();
+	anim.play("hit");
+	$Background.process_material.color = Color(1, 1, 1, 1);
+	pass
 func _on_ball_destroy(x_position: float):
 	print("Death on ", x_position);
 	
 	var explosion = ballExplosionScene.instance() as Particles2D;
+	
+	$ShakeCamera2D.add_trauma(0.5);
 	
 	# Left side? -> Score right player
 	if (x_position < 64):
@@ -60,9 +71,10 @@ func _on_ball_destroy(x_position: float):
 		
 	helper_class.play_sound(sound, "res://sounds/ball_destroy.wav");
 	
-	VisualServer.set_default_clear_color(Color(0.8, 0, 0, 1.0));
-	yield(get_tree().create_timer(0.1), "timeout");
-	VisualServer.set_default_clear_color(Color(0, 0, 0, 1.0));
+	#VisualServer.set_default_clear_color(Color(0.8, 0, 0, 1.0));
+	#yield(get_tree().create_timer(0.1), "timeout");
+	#VisualServer.set_default_clear_color(Color(0, 0, 0, 1.0));
+	anim.play("death");
 	
 	yield(get_tree().create_timer(1.0), "timeout");
 	
